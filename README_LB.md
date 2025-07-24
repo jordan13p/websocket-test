@@ -5,12 +5,14 @@
 ## 🚀 新功能特色
 
 ### 服務實例識別
+
 - **自動檢測運行環境** (本機/Docker/Kubernetes)
 - **唯一實例 ID** 生成
 - **Pod/容器資訊收集** (hostname, IP, Pod名稱等)
 - **即時連線資訊** 顯示用戶連接到哪個服務實例
 
 ### 完整的 WebSocket 功能
+
 - Health Check 端點 (`/` 和 `/health`)
 - HTTP WebSocket 端點 (`/ws`)
 - 獨立 WebSocket 服務器 (port 8765)
@@ -93,6 +95,7 @@ python test_lb.py --host <EXTERNAL-IP> --connections 10
 ### 手動測試
 
 #### 1. 健康檢查測試
+
 ```bash
 # 檢查服務狀態和實例資訊
 curl http://localhost:8080/health | jq
@@ -152,6 +155,7 @@ ws.send(JSON.stringify({
 當多個服務實例運行時：
 
 1. **每次連線都會顯示實例資訊**
+
    ```json
    {
      "type": "welcome",
@@ -171,7 +175,7 @@ ws.send(JSON.stringify({
 
 ### 測試結果範例
 
-```
+```bash
 🚀 Starting WebSocket Load Balancer Test
 ==================================================
 🔍 Testing health check: http://localhost:8080/health
@@ -203,12 +207,14 @@ ws.send(JSON.stringify({
    - 確認有多個 Pod 在運行 (`kubectl get pods`)
 
 2. **環境變數未正確設定**
+
    ```bash
    # 檢查 Pod 環境變數
    kubectl exec -it <pod-name> -- env | grep POD_
    ```
 
 3. **健康檢查失敗**
+
    ```bash
    # 檢查 Pod 日誌
    kubectl logs <pod-name>
@@ -220,7 +226,8 @@ ws.send(JSON.stringify({
 ### 日誌範例
 
 服務啟動時會顯示：
-```
+
+```bash
 2024-01-20 10:30:00 - __main__ - INFO - Service Identity: {'instance_id': 'a1b2c3d4', 'hostname': 'websocket-test-service-7d8f9-xyz12', ...}
 2024-01-20 10:30:00 - __main__ - INFO - === WebSocket Test Service Started ===
 2024-01-20 10:30:00 - __main__ - INFO - Service Instance: websocket-test-service-websocket-test-service-7d8f9-xyz12
@@ -230,6 +237,7 @@ ws.send(JSON.stringify({
 ## 🔧 客製化
 
 ### 自定義服務名稱
+
 ```yaml
 env:
 - name: SERVICE_NAME
@@ -237,7 +245,9 @@ env:
 ```
 
 ### 添加額外的實例資訊
+
 修改 `ServiceIdentity` 類別來包含更多資訊，例如：
+
 - 版本號
 - 部署時間
 - 自定義標籤
@@ -247,6 +257,7 @@ env:
 ### WebSocket 訊息格式
 
 #### Welcome 訊息 (自動發送)
+
 ```json
 {
   "type": "welcome",
@@ -263,6 +274,7 @@ env:
 ```
 
 #### Ping 訊息
+
 ```json
 // 發送
 {
