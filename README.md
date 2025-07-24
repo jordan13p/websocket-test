@@ -70,6 +70,7 @@ curl http://localhost:8080/health
 ```
 
 回應範例：
+
 ```json
 {
   "status": "healthy",
@@ -106,7 +107,7 @@ wscat --connect ws://localhost:8080/ws
 
 #### 1. 純文字訊息
 
-```
+```bash
 > hello world
 < {"type": "text_echo", "timestamp": "2025-07-23T09:01:00.000000", "original_message": "hello world", "message_length": 11}
 
@@ -116,26 +117,27 @@ wscat --connect ws://localhost:8080/ws
 
 #### 2. Ping/Pong 測試
 
-```
+```bash
 > {"type": "ping", "data": "test"}
 < {"type": "pong", "timestamp": "2025-07-23T09:01:10.000000", "original_data": {"type": "ping", "data": "test"}}
 ```
 
 #### 3. Echo 測試
 
-```
+```bash
 > {"type": "echo", "message": "Hello Echo"}
 < {"type": "echo_response", "timestamp": "2025-07-23T09:01:15.000000", "echoed_data": {"type": "echo", "message": "Hello Echo"}}
 ```
 
 #### 4. 廣播訊息
 
-```
+```bash
 > {"type": "broadcast", "message": "Hello everyone!"}
 < {"type": "broadcast_confirmation", "timestamp": "2025-07-23T09:01:20.000000", "recipients": 3}
 ```
 
 其他連接的客戶端會收到：
+
 ```json
 {
   "type": "broadcast",
@@ -207,6 +209,7 @@ docker restart websocket-service
    - ✅ 已修復：現在純數字會被當作普通文字處理
 
 2. **端口被占用**
+
    ```bash
    # 檢查端口使用情況
    netstat -tlnp | grep :8080
@@ -214,6 +217,7 @@ docker restart websocket-service
    ```
 
 3. **容器無法啟動**
+
    ```bash
    # 檢查詳細錯誤
    docker logs websocket-service
@@ -249,12 +253,12 @@ docker logs --since "2025-07-23T09:00:00" websocket-service
 
 ### 專案結構
 
-```
+```bash
 websocket-docker/
 ├── app.py              # 主要應用程式
 ├── requirements.txt    # Python 依賴
-├── Dockerfile         # Docker 建置檔案
-└── README.md          # 專案說明
+├── Dockerfile          # Docker 建置檔案
+└── README.md           # 專案說明
 ```
 
 ### 環境變數
